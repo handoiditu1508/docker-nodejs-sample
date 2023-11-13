@@ -11,6 +11,7 @@ services:
   server:
     build:
       context: .
+      target: dev
     environment:
       NODE_ENV: production
       POSTGRES_HOST: db
@@ -19,11 +20,14 @@ services:
       POSTGRES_DB: example
     ports:
       - 3000:3000
+      - 9229:9229
     depends_on:
       db:
         condition: service_healthy
     secrets:
       - db-password
+    volumes:
+      - ./src:/usr/src/app/src
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
